@@ -1,0 +1,19 @@
+(executable
+ (name day01)
+ (modules day01)
+ (libraries core stdio core_bench re))
+
+(executable
+ (name day02)
+ (modules day02)
+ (libraries core stdio core_bench re))
+
+(executable
+ (name day03)
+ (modules day03)
+ (libraries stdlib core stdio core_bench re))
+
+(executable
+ (name day04)
+ (modules day04)
+ (libraries core stdio core_bench re))
