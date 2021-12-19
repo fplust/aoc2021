@@ -17,3 +17,9 @@
  (name day04)
  (modules day04)
  (libraries core stdio core_bench re))
+
+(executable
+ (name day05)
+ (modules day05)
+ (libraries core stdio core_bench re)
+ (preprocess (pps ppx_jane)))
