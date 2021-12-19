@@ -23,3 +23,9 @@
  (modules day05)
  (libraries core stdio core_bench re)
  (preprocess (pps ppx_jane)))
+
+(executable
+ (name day05_hashtbl)
+ (modules day05_hashtbl)
+ (libraries core stdio core_bench re)
+ (preprocess (pps ppx_jane)))

@@ -3,7 +3,7 @@ open Core
 
 module Point = struct
   module T = struct
-    type t = {x: int; y: int} [@@deriving compare, sexp]
+    type t = {x: int; y: int} [@@deriving compare, sexp, hash]
   end
   include T
   include Comparable.Make(T)
@@ -39,31 +39,31 @@ let p_of_line ((p1, p2):(Point.t * Point.t)) =
     |> List.map ~f:(fun (x, y) -> ({x=x; y=y}: Point.t))
   | _ -> []
 
-let line_to_map lines m = List.fold ~init:m lines ~f:(fun m line ->
+let line_to_map lines m = List.iter lines ~f:(fun line ->
   p_of_line line
-  |> List.fold ~init: m ~f:(fun m p ->
-    match Map.find m p with
-    | Some(n) -> Map.set m ~key:p ~data:(n+1)
-    | None -> Map.set m ~key:p ~data:1
+  |> List.iter ~f:(fun p ->
+    match Hashtbl.find m p with
+    | Some(n) -> Hashtbl.set m ~key:p ~data:(n+1)
+    | None -> Hashtbl.set m ~key:p ~data:1
   ))
 
-let print_map m = Map.iter_keys m ~f:(fun (p: Point.t) ->
-  let v = Map.find_exn m p in
+let print_map m = Hashtbl.iter_keys m ~f:(fun (p: Point.t) ->
+  let v = Hashtbl.find_exn m p in
   if v > 1 then printf "%d, %d: %d\n" p.x p.y v else ()
   )
 
-let count_map m = Map.filter m ~f:(fun v -> v > 1) |> Map.keys |> List.length
+let count_map m = Hashtbl.filter m ~f:(fun v -> v > 1) |> Hashtbl.keys |> List.length
 
 (* part 1 *)
-let p_map = Map.empty (module Point)
-let new_map = line_to_map h_and_v_lines p_map
-let gt1_count = count_map new_map
+let p_map = Hashtbl.create (module Point)
+let () = line_to_map h_and_v_lines p_map
+let gt1_count = count_map p_map
 
 let () = printf "%d\n" gt1_count
 
 (* part 2 *)
-let p_map_2 = Map.empty (module Point)
-let new_map_2 = line_to_map lines p_map_2
-let gt1_count_2 = count_map new_map_2
+let p_map_2 = Hashtbl.create (module Point)
+let () = line_to_map lines p_map_2
+let gt1_count_2 = count_map p_map_2
 
 let () = printf "%d\n" gt1_count_2
