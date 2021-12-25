@@ -9,14 +9,14 @@ let crabs =
 
 let cost crabs pos =
   List.map crabs ~f:(fun x -> Int.abs (x - pos))
-  |> List.sum (module Int) ~f:(fun x -> x)
+  |> List.sum (module Int) ~f:Fun.id
 
 let cost_2 crabs pos =
   List.map crabs ~f:(fun x ->
     let step = Int.abs (x - pos) in
       step * (step + 1) / 2
     )
-  |> List.sum (module Int) ~f:(fun x -> x)
+  |> List.sum (module Int) ~f:Fun.id
 
 let middle b e = (b + e) / 2
 

@@ -52,7 +52,7 @@ let check_win board =
       (diagonal board)
   in
   List.map checks ~f:(List.for_all ~f:(fun x -> x.marked))
-  |> List.exists ~f:(fun x -> x)
+  |> List.exists ~f:Fun.id
 
 let rec iter_until ~f ~p list =
   match list with

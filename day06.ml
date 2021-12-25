@@ -20,7 +20,7 @@ let nextday fishes =
       | _ -> Array.set fishes i (fishes.(i+1))
     )
 
-let sum fishes = Array.sum (module Int) fishes ~f:(fun x -> x)
+let sum fishes = Array.sum (module Int) fishes ~f:Fun.id
 
 let rec after_days fishes days =
   let () = printf "day %d: %d\n" days (sum fishes) in

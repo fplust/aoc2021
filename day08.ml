@@ -12,8 +12,8 @@ let count_1 =
       List.map digits ~f:(fun digit ->
           (* printf "%s\n" digit; *)
           match String.length digit with 2 | 3 | 4 | 7 -> 1 | _ -> 0)
-      |> List.sum (module Int) ~f:(fun x -> x))
-  |> List.sum (module Int) ~f:(fun x -> x)
+      |> List.sum (module Int) ~f:Fun.id)
+  |> List.sum (module Int) ~f:Fun.id
 
 let () = printf "%d\n" count_1
 
@@ -104,4 +104,4 @@ let digits_list =
       List.map digits ~f:(fun d -> Hashtbl.find_exn map (sort d))
       |> List.map ~f:string_of_int |> String.concat |> int_of_string)
 
-let () = printf "%d\n" (List.sum (module Int) digits_list ~f:(fun x -> x))
+let () = printf "%d\n" (List.sum (module Int) digits_list ~f:Fun.id)
